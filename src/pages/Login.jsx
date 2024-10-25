@@ -53,54 +53,54 @@ import { auth } from '../firebase';
 import useAuthStore from '../stores/use-auth-store.js';
 import { Link } from 'react-router-dom';
 
-import '../styles/Login.css'
-
+import '../styles/Login.css';
 
 function Login() {
-    const { user, loginGoogleWithPopUp, logout, observeAuthState } = useAuthStore(); // Desestructurar las funciones del store
-    const [loading, setLoading] = useState(true); // Estado para manejar el "loading"
+    const { user, loginGoogleWithPopUp, logout, observeAuthState } = useAuthStore(); // Destructure functions from the store
+    const [loading, setLoading] = useState(true); // State to manage loading
 
-    // Asegura de que la función observeAuthState se ejecute cuando el componente
-    // se cargue. Esto verifica si un usuario ya está autenticado
+    // Ensure that the observeAuthState function runs when the component mounts
     useEffect(() => {
         const checkAuthState = async () => {
             await observeAuthState();
-            setLoading(false); // Cambiar el estado de loading cuando se verifica la autenticación
+            setLoading(false); // Change loading state after authentication check
         };
         checkAuthState();
     }, [observeAuthState]);
     
-    // Función que se ejecuta cuando el usuario hace clic en el botón
-    // de "Iniciar sesión". Esta función llama a loginGoogleWithPopUp para mostrar el popup de inicio
-    // de sesión de Google
+    // Function that runs when the user clicks the login button
     const handleLogin = useCallback(() => {
         loginGoogleWithPopUp();
     }, [loginGoogleWithPopUp]);
     
-    // Se ejecuta cuando el usuario hace clic en el botón de "Cerrar sesión".
-    // Esta función llama a logout para desconectar al usuario
+    // Runs when the user clicks the logout button
     const handleLogout = useCallback(() => {
         logout();
     }, [logout]);
 
-    // Si el estado loading es true, muestra un texto que dice "Cargando..."
+    // If loading state is true, show a loading text
     if (loading) {
-        return <p className="loading-text">Cargando...</p>;
+        return <p className="loading-text">Loading...</p>;
     }
 
     return (
         <div className="container-login">
             {user ? (
                 <>
-                    <p className="welcome-text">Bienvenido, {user.displayName}</p>
-                    <Link to="/Animation">VER ANIMACION</Link>
-                    <button className="button-logout" onClick={handleLogout}>Cerrar sesión</button>
+                    <p className="welcome-text">Welcome, {user.displayName}</p>
+                    <div className="button-container">
+                        <Link to="/Animation" className="button-option">VIEW ANIMATION</Link>
+                        <button className="button-option" onClick={handleLogout}>Logout</button>
+                        <Link to="/" className="button-option">Back to Main Menu</Link>
+                    </div>
                 </>
             ) : (
-                <button onClick={handleLogin}>Iniciar sesión</button>
+                <button className="button-option" onClick={handleLogin}>Login</button>
             )}
         </div>
     );
 }
 
 export default Login;
+
+
