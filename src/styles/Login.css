@@ -9,9 +9,40 @@
 .welcome-text {
     font-size: x-large;
     color: #333;
+    margin-bottom: 20px; /* Add some space below the welcome text */
 }
 
 .loading-text {
     font-size: medium;
     color: #666;
 }
+
+.button-container {
+    display: flex;
+    flex-direction: column; /* Arrange buttons vertically */
+    align-items: center; /* Center buttons horizontally */
+    gap: 10px; /* Space between buttons */
+}
+
+.button-option {
+    background-color: #1CAAD9; /* Button background color */
+    color: white;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline from the link */
+    transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+    width: 100%; /* Make buttons full-width */
+    max-width: 200px; /* Limit max width */
+}
+
+.button-option:hover {
+    transform: scale(1.05);
+    background-color: #148fba; /* Change background color on hover */
+}
+
+
+
+
