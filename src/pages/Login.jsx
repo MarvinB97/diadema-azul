@@ -1,6 +1,3 @@
-import { Link } from 'react-router-dom';
-
-
 //-------style----------------
 import logo from './../assets/logo.png';
 import PlayaModel from './../components/PlayaModel';
