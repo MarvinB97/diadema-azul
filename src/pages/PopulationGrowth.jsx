@@ -10,7 +10,7 @@ const PopulationGrowth = () => {
         As urbanization and industrial activities expand, the demand for water rises exponentially. 
         Effective water management strategies are critical to meet the growing needs of communities worldwide.
       </p>
-      <Link to="/waterscarcity">
+      <Link to="/">
         <button style={{ padding: '10px', backgroundColor: '#007BFF', color: 'white', border: 'none', borderRadius: '5px' }}>
           Back to Menu
         </button>

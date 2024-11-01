@@ -9,7 +9,7 @@ const AgriculturalOveruse = () => {
         Agricultural overuse of water depletes resources rapidly and threatens food security. 
         Sustainable practices are essential to prevent further damage.
       </p>
-      <Link to="/waterscarcity">
+      <Link to="/">
         <button style={{ padding: '10px', backgroundColor: '#007BFF', color: 'white', border: 'none', borderRadius: '5px' }}>
           Back to Menu
         </button>

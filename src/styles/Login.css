@@ -6,12 +6,6 @@
     height: 100vh;
 }
 
-.welcome-text {
-    font-size: x-large;
-    color: #333;
-    margin-bottom: 20px; /* Add some space below the welcome text */
-}
-
 .loading-text {
     font-size: medium;
     color: #666;
@@ -19,15 +13,21 @@
 
 .button-container {
     display: flex;
+    color: white;
     flex-direction: column; /* Arrange buttons vertically */
     align-items: center; /* Center buttons horizontally */
-    gap: 10px; /* Space between buttons */
+     /*gap: 10px; Space between buttons */
+    background-color: black;
+    height: 70vh;
+    width: 45vh;
+    border-radius: 10px;
 }
 
 .button-option {
-    background-color: #1CAAD9; /* Button background color */
-    color: white;
-    padding: 12px 25px;
+    background-color: #000000; /* Button background color */
+    color: rgb(218, 219, 219);
+    padding: 0px 0px;
+    margin-bottom: 10%;
     font-size: 1.2rem;
     border: none;
     border-radius: 8px;
@@ -40,7 +40,7 @@
 
 .button-option:hover {
     transform: scale(1.05);
-    background-color: #148fba; /* Change background color on hover */
+    background-color: #9c9c9c; /* Change background color on hover */
 }
 
 

@@ -18,48 +18,67 @@
 
 .header-content {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 30px;
+  margin-left: auto;
   z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   font-family: 'Arial', sans-serif; /* Cambia a la fuente que desees */
+  color: #FFFFFF;
 }
 
 .logo {
   width: 150px;
   height: auto;
-  margin-bottom: 10px;
+  margin: auto;
+  border-radius: 60px;
 }
 
 .welcome-text {
-  font-size: 2.5rem; /* Aumenté el tamaño de la fuente */
+  /*font-size: 2.5rem; /* Aumenté el tamaño de la fuente */
   font-weight: bold;
-  color: #39D69F; /* Cambié el color a Verde Lima */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Mayor contraste en el texto */
-  margin: 10px 0; /* Añadido margen para mejor separación */
+  /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8); /* Mayor contraste en el texto */
+  margin: auto; /* Añadido margen para mejor separación */
 }
 
 .nav-links {
   position: absolute;
-  top: 80%;
-  right: 20px;
+  top: 5px;
+  right: 5px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   z-index: 10;
 }
 
+.introduction{
+  position: absolute;
+  bottom: 1%;
+  padding: 4px;
+  background-color: rgba(9, 8, 8, 0.81);
+  border-radius: 10px;
+  color: white;
+  text-align: justify;
+  width: 70%;
+  font-size: 15px;
+}
+
+.introduction:hover{
+  width: 80%;
+  font-size: large;
+}
+
 .styled-button {
-  background-color: #0077b6; /* Cambié a un azul más oscuro */
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,127,222,1) 43%, rgba(0,212,255,1) 100%);
   color: #FFFFFF; /* Blanco para el texto */
   padding: 12px 25px;
   font-size: 1.2rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin: 10px 0;
+  margin: auto;
   transition: transform 0.2s ease-in-out, background-color 0.3s ease;
   font-family: 'Verdana', sans-serif; /* Cambié a una fuente más moderna */
 }
@@ -78,15 +97,3 @@
   z-index: -1;
   background: linear-gradient(180deg, #0077b6 0%, #00b4d8 100%);
 }
-
-
-
-
-
-
-
-
-
-
-  
-  

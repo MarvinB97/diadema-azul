@@ -10,7 +10,7 @@ const ClimateChange = () => {
         increasing evaporation rates. As global temperatures rise, water availability becomes more unpredictable, 
         affecting both ecosystems and human populations.
       </p>
-      <Link to="/waterscarcity">
+      <Link to="/">
         <button style={{ padding: '10px', backgroundColor: '#007BFF', color: 'white', border: 'none', borderRadius: '5px' }}>
           Back to Menu
         </button>

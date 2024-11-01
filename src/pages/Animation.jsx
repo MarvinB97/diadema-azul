@@ -40,7 +40,7 @@ function Animation() {
         {/* Caja animada */}
         <AnimatedObject />
       </Canvas>
-      <Link to="/login">Volver</Link>
+      <Link to="/">Volver</Link>
     </div>
   );
 }

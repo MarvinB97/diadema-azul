@@ -10,7 +10,7 @@ const Pollution = () => {
         Chemical spills, waste dumping, and runoff from agricultural fields degrade the quality of freshwater,
         making it unsafe for human consumption and ecosystems. Addressing pollution is key to safeguarding water resources.
       </p>
-      <Link to="/waterscarcity">
+      <Link to="/">
         <button style={{ padding: '10px', backgroundColor: '#007BFF', color: 'white', border: 'none', borderRadius: '5px' }}>
           Back to Menu
         </button>
