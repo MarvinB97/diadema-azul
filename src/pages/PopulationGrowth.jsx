@@ -1,83 +1,103 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Text } from '@react-three/drei';
-import * as THREE from 'three';
+import { useGLTF, OrbitControls, Environment } from '@react-three/drei';
 
-const PopulationGrowth = () => {
-  const data = [
-    { year: '2000', population: 4 },
-    { year: '2005', population: 6 },
-    { year: '2010', population: 9 },
-    { year: '2015', population: 11 },
-    { year: '2020', population: 14 },
-  ];
+const Model = () => {
+  const { scene } = useGLTF('/models-3d/ciudad_desierto.glb'); // Load the 3D model
+  return <primitive object={scene} scale={[2.0, 2.0, 2.0]} position={[0, 0, 0]} />; // Adjust scale and position as needed
+};
 
+const InteractiveCityDesert = () => {
   return (
-    <div style={{ padding: '40px', textAlign: 'center', backgroundColor: '#f0f0f0', borderRadius: '10px' }}>
-      <h1 style={{ color: '#007BFF', marginBottom: '20px' }}>Crecimiento Demográfico</h1>
-      <p style={{ color: '#333', fontSize: '18px', lineHeight: '1.6', marginBottom: '30px' }}>
-        El crecimiento demográfico ejerce una presión cada vez mayor sobre los recursos hídricos.
-        A medida que se expanden la urbanización y las actividades industriales, la demanda de agua aumenta exponencialmente.
-        Las estrategias eficaces de gestión del agua son fundamentales para satisfacer las crecientes necesidades de las comunidades de todo el mundo.
-      </p>
-      <Canvas style={{ height: '580px', marginBottom: '30px' }} camera={{ position: [0, 10, 35], fov: 50 }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 5, 5]} intensity={1.5} />
-        <OrbitControls />
-        {/* Fondo de la gráfica en posición vertical */}
-        <mesh position={[0, 0, -10]} rotation={[0, 0, 0]}>
-          <planeGeometry args={[40, 40]} />
-          <meshStandardMaterial color="#e0f7fa" side={THREE.DoubleSide} />
-        </mesh>
-        {data.map((entry, index) => (
-          <mesh key={entry.year} position={[index * 4 - 8, entry.population / 2, 0]}>
-            <boxGeometry args={[2, entry.population, 2]} />
-            <meshStandardMaterial color="skyblue" />
-            <Text
-              position={[0, -entry.population / 2 - 0.5, 1]}
-              fontSize={0.5}
-              color="black"
-              anchorX="center"
-              anchorY="middle"
-            >
-              {entry.year}
-            </Text>
-          </mesh>
-        ))}
-        <Text
-          position={[0, -1.8, 0]}
-          fontSize={1}
-          color="blue"
-          anchorX="center"
-          anchorY="middle"
-        >
-          Impacto del Crecimiento en Colombia
-        </Text>
-      </Canvas>
-      <p style={{ color: '#333', fontSize: '18px', marginBottom: '20px' }}>
-        Datos conseguidos en: <a href="https://datosmacro.expansion.com/demografia/poblacion/colombia#:~:text=Colombia%20registra%20un%20incremento%20de%20su%20poblaci%C3%B3n&text=Seg%C3%BAn%20los%20%C3%BAltimos%20datos%20publicados,mundo%20por%20porcentaje%20de%20inmigraci%C3%B3n." target="_blank" rel="noopener noreferrer" style={{ color: '#007BFF', textDecoration: 'underline' }}>Datos Macro</a>
-      </p>
-      <Link to="/">
-      <button style={{
-            padding: '10px 22px',
-            backgroundColor: 'transparent',
-            color: '#007BFF',
-            border: '2px solid #007BFF',
+    <div style={{ height: '100vh', width: '100vw', display: 'flex' }}>
+      {/* Canvas with 3D model */}
+      <div style={{ flex: 1 }}>
+        <Canvas style={{ height: '100%', width: '100%' }}>
+          <Environment preset="city" />
+          <ambientLight intensity={0.7} />
+          <directionalLight position={[10, 10, 5]} intensity={1.5} />
+          <Model />
+          <OrbitControls 
+            enableZoom={true} 
+            enablePan={true} 
+            enableRotate={true} 
+            maxPolarAngle={Math.PI / 2} 
+            minPolarAngle={0} 
+            rotateSpeed={0.8}
+            zoomSpeed={0.5}
+            panSpeed={0.5}
+            minDistance={50} // Limit for zooming in
+            maxDistance={10000} // High value for zooming out
+          />
+        </Canvas>
+      </div>
+
+      {/* Informational text */}
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '20px',
+        backgroundColor: 'rgba(178, 224, 230, 0.9)', // Light ocean blue background
+        backdropFilter: 'blur(10px)', // Background blur effect
+        overflowY: 'auto',
+        maxHeight: '100vh',
+        marginLeft: '20px', // Adjust the margin as needed
+        borderRadius: '10px', // Rounded corners for the info box
+      }}>
+        <div style={{ textAlign: 'left', maxWidth: '600px', margin: 'auto' }}>
+          <h1 style={{ color: '#000', fontSize: '2.5em', fontWeight: 'bold' }}>
+            Causas y Consecuencias de la Contaminación Marina
+          </h1>
+          <p style={{ color: '#333', fontSize: '1.2em', lineHeight: '1.6', marginBottom: '20px' }}>
+            La contaminación marina tiene múltiples causas y efectos devastadores en nuestros océanos. Aquí exploramos algunas de ellas.
+          </p>
+          <h2 style={{ color: '#555', fontSize: '2em', margin: '20px 0 10px' }}>Causas de la Contaminación Marina</h2>
+          <ul style={{ color: '#555', fontSize: '1.2em', lineHeight: '1.5' }}>
+            <li><strong>Plaguicidas y Herbicidas:</strong> Estos productos químicos pueden llegar a los océanos a través de ríos y aguas subterráneas.</li>
+            <li><strong>Fertilizantes y Detergentes:</strong> Su uso puede causar eutrofización en los cuerpos de agua.</li>
+            <li><strong>Plásticos:</strong> Los plásticos desechados son una gran amenaza para la vida marina.</li>
+          </ul>
+          <h2 style={{ color: '#555', fontSize: '2em', margin: '20px 0 10px' }}>Consecuencias de la Contaminación Marina</h2>
+          <ul style={{ color: '#555', fontSize: '1.2em', lineHeight: '1.5' }}>
+            <li><strong>Pérdida de Biodiversidad:</strong> Muchas especies marinas están en peligro.</li>
+            <li><strong>Impacto en la Salud Humana:</strong> Los contaminantes en mariscos afectan la salud humana.</li>
+            <li><strong>Daño Económico:</strong> La industria pesquera se ve gravemente afectada.</li>
+          </ul>
+
+          {/* Back to menu button */}
+          <a href="/" style={{
+            display: 'inline-block',
+            padding: '10px 20px',
+            backgroundColor: '#007BFF',
+            color: '#fff',
             borderRadius: '8px',
-            fontSize: '1em',
-            position: 'relative',
-            overflow: 'hidden',
-            transition: 'all 0.3s',
+            textDecoration: 'none',
+            fontSize: '1.2em',
+            marginTop: '20px',
+            transition: 'background-color 0.3s, transform 0.2s',
           }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#007BFF'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0056b3'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#007BFF'}
           >
-            <span style={{ color: '#ffffff' }}>Volver al menú</span>
-          </button>
-      </Link>
+            Volver al menú
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default PopulationGrowth;
+export default InteractiveCityDesert;
+
+
+
+
+
+
+
+
+
+
+
