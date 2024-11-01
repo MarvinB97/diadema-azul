@@ -78,7 +78,7 @@ function Home() {
                 <ul>
                   <li><Link to="/agricultural-overuse" className="button-option">Contaminacion marina</Link></li>
                   <li><Link to="/climate-change" className="button-option">Cambio Climatico</Link></li>
-                  <li><Link to="/pollution" className="button-option">Contaminación</Link></li>
+                  <li><Link to="/pollution" className="button-option">Contaminación fuentes de agua </Link></li>
                   <li><Link to="/population-growth" className="button-option">Aumento de la contaminación</Link></li>
                   <li><Link to="/pollution-mine" className="button-option">Minería ilegal</Link></li>
                 </ul>

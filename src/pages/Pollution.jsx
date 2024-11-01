@@ -37,10 +37,8 @@ const Pollution = () => {
 
   // Maneja el clic en el modelo
   const handleClick = (event) => {
-    // Asegúrate de que el clic esté dentro del modelo y determina la posición del tooltip
-    const { clientX, clientY } = event.event; // Obtener la posición del clic
-    setPosition([clientX, clientY]); // Actualiza la posición del tooltip
-    setInfo("Aquí puedes poner información relevante sobre esta parte del modelo."); // Establecer información
+    const { clientX, clientY } = event.event; 
+    setPosition([clientX, clientY]); 
   };
 
   const handleClose = () => {
@@ -48,9 +46,9 @@ const Pollution = () => {
   };
 
   return (
-    <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', height: '100vh', overflow: 'hidden', backgroundImage: `url('/ptar_agua.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
       {/* Canvas para el modelo 3D */}
-      <Canvas style={{ height: '100%', width: '100%', position: 'absolute', top: 0, left: 0, background: '#87CEFA' }}>
+      <Canvas style={{ height: '100%', width: '100%', position: 'absolute', top: 0, left: 0 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 10, 5]} intensity={2.5} />
         <pointLight position={[-10, -10, -10]} intensity={0.5} />
@@ -70,17 +68,17 @@ const Pollution = () => {
         </p>
 
         <Link to="/">
-        <button style={{
-            padding: '10px 22px',
-            backgroundColor: 'transparent',
-            color: '#007BFF',
-            border: '2px solid #007BFF',
-            borderRadius: '8px',
-            fontSize: '1em',
-            position: 'relative',
-            overflow: 'hidden',
-            transition: 'all 0.3s',
-          }}
+          <button style={{
+              padding: '10px 22px',
+              backgroundColor: 'transparent',
+              color: '#007BFF',
+              border: '2px solid #007BFF',
+              borderRadius: '8px',
+              fontSize: '1em',
+              position: 'relative',
+              overflow: 'hidden',
+              transition: 'all 0.3s',
+            }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#007BFF'}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           >
@@ -96,3 +94,4 @@ const Pollution = () => {
 };
 
 export default Pollution;
+
