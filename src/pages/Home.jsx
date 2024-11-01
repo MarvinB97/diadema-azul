@@ -58,7 +58,7 @@ function Home() {
               <directionalLight castShadow position={[5, 10, 5]} intensity={2} />
               <PlayaModel position={[0, -1.5, 0]} scale={[2, 2, 2]} />
               <OrbitControls />
-              <Environment preset="warehouse" background resolution={4096} />
+              <Environment preset="park" background resolution={4096} />
             </Canvas>
           </div>
           <div className="header-content">
