@@ -76,7 +76,7 @@ function Home() {
               <div className={`menu ${isOpen ? 'show' : ''}`}>
                 <h3>MENU INFORMATIVO</h3>
                 <ul>
-                  <li><Link to="/agricultural-overuse" className="button-option">Sobre explotación agricola</Link></li>
+                  <li><Link to="/agricultural-overuse" className="button-option">Contaminacion marina</Link></li>
                   <li><Link to="/climate-change" className="button-option">Cambio Climatico</Link></li>
                   <li><Link to="/pollution" className="button-option">Contaminación</Link></li>
                   <li><Link to="/population-growth" className="button-option">Aumento de la contaminación</Link></li>
