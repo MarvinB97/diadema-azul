@@ -3,19 +3,22 @@ import { Canvas } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Environment } from '@react-three/drei';
 
 const Model = () => {
-  const { scene } = useGLTF('/models-3d/ciudad_desierto.glb'); // Load the 3D model
-  return <primitive object={scene} scale={[2.0, 2.0, 2.0]} position={[0, 0, 0]} />; // Adjust scale and position as needed
+  const { scene } = useGLTF('/models-3d/ciudad_desierto.glb'); 
+  return <primitive object={scene} scale={[1.0, 1.0, 1.0]} position={[-20, -500, -50]} />;
 };
 
 const InteractiveCityDesert = () => {
   return (
     <div style={{ height: '100vh', width: '100vw', display: 'flex' }}>
       {/* Canvas with 3D model */}
-      <div style={{ flex: 1 }}>
-        <Canvas style={{ height: '100%', width: '100%' }}>
+      <div style={{ flex: 2 }}>
+        <Canvas 
+          style={{ height: '100%', width: '100%', background: 'linear-gradient(180deg, #87CEEB, #ffffff)' }} 
+          camera={{ position: [0, 0, 500], fov: 90, near: 0.1, far: 7000 }}
+        >
           <Environment preset="city" />
           <ambientLight intensity={0.7} />
-          <directionalLight position={[10, 10, 5]} intensity={1.5} />
+          <directionalLight position={[0, 0, 0]} intensity={1.5} />
           <Model />
           <OrbitControls 
             enableZoom={true} 
@@ -24,49 +27,38 @@ const InteractiveCityDesert = () => {
             maxPolarAngle={Math.PI / 2} 
             minPolarAngle={0} 
             rotateSpeed={0.8}
-            zoomSpeed={0.5}
+            zoomSpeed={1}
             panSpeed={0.5}
-            minDistance={50} // Limit for zooming in
-            maxDistance={10000} // High value for zooming out
+            minDistance={50} 
+            maxDistance={2000} 
           />
         </Canvas>
       </div>
 
-      {/* Informational text */}
+      {/* Informational text about "Crecimiento Demográfico" */}
       <div style={{
         flex: 1,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         padding: '20px',
-        backgroundColor: 'rgba(178, 224, 230, 0.9)', // Light ocean blue background
-        backdropFilter: 'blur(10px)', // Background blur effect
+        backgroundColor: 'rgba(178, 224, 230, 0.9)',
+        backdropFilter: 'blur(10px)', 
         overflowY: 'auto',
         maxHeight: '100vh',
-        marginLeft: '20px', // Adjust the margin as needed
-        borderRadius: '10px', // Rounded corners for the info box
+        marginLeft: '20px', 
+        borderRadius: '10px',
       }}>
         <div style={{ textAlign: 'left', maxWidth: '600px', margin: 'auto' }}>
           <h1 style={{ color: '#000', fontSize: '2.5em', fontWeight: 'bold' }}>
-            Causas y Consecuencias de la Contaminación Marina
+            Crecimiento Demográfico
           </h1>
           <p style={{ color: '#333', fontSize: '1.2em', lineHeight: '1.6', marginBottom: '20px' }}>
-            La contaminación marina tiene múltiples causas y efectos devastadores en nuestros océanos. Aquí exploramos algunas de ellas.
+            El crecimiento demográfico ejerce una presión cada vez mayor sobre los recursos hídricos.
+            A medida que se expanden la urbanización y las actividades industriales, la demanda de agua aumenta exponencialmente.
+            Las estrategias eficaces de gestión del agua son fundamentales para satisfacer las crecientes necesidades de las comunidades de todo el mundo.
           </p>
-          <h2 style={{ color: '#555', fontSize: '2em', margin: '20px 0 10px' }}>Causas de la Contaminación Marina</h2>
-          <ul style={{ color: '#555', fontSize: '1.2em', lineHeight: '1.5' }}>
-            <li><strong>Plaguicidas y Herbicidas:</strong> Estos productos químicos pueden llegar a los océanos a través de ríos y aguas subterráneas.</li>
-            <li><strong>Fertilizantes y Detergentes:</strong> Su uso puede causar eutrofización en los cuerpos de agua.</li>
-            <li><strong>Plásticos:</strong> Los plásticos desechados son una gran amenaza para la vida marina.</li>
-          </ul>
-          <h2 style={{ color: '#555', fontSize: '2em', margin: '20px 0 10px' }}>Consecuencias de la Contaminación Marina</h2>
-          <ul style={{ color: '#555', fontSize: '1.2em', lineHeight: '1.5' }}>
-            <li><strong>Pérdida de Biodiversidad:</strong> Muchas especies marinas están en peligro.</li>
-            <li><strong>Impacto en la Salud Humana:</strong> Los contaminantes en mariscos afectan la salud humana.</li>
-            <li><strong>Daño Económico:</strong> La industria pesquera se ve gravemente afectada.</li>
-          </ul>
 
-          {/* Back to menu button */}
           <a href="/" style={{
             display: 'inline-block',
             padding: '10px 20px',
@@ -90,6 +82,11 @@ const InteractiveCityDesert = () => {
 };
 
 export default InteractiveCityDesert;
+
+
+
+
+
 
 
 
