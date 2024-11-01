@@ -82,12 +82,9 @@ function Home() {
                   <li><Link to="/population-growth" className="button-option">Aumento de la contaminación</Link></li>
                   <li><Link to="/pollution-mine" className="button-option">Minería ilegal</Link></li>
                 </ul>
-                <h3>Evaluaciones</h3>
-                <ul>
-                  <li><Link to="/#" className="button-option">quiz 1</Link></li>
-                  <li><Link to="/#" className="button-option">quiz 2</Link></li>
-                </ul>
-                <button className="button-option" onClick={handleLogout}>Cerrar sesion</button>
+                
+            
+                <button className="styled-logout-button" onClick={handleLogout}>Cerrar sesión</button>
               </div>
             </div>
           </div>

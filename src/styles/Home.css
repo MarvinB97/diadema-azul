@@ -70,8 +70,8 @@
 }
 
 .styled-button {
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,127,222,1) 43%, rgba(0,212,255,1) 100%);
+  background: rgb(0, 0, 0);
+  background: linear-gradient(90deg, rgb(51, 50, 85) 0%, rgba(0,127,222,1) 43%, rgba(0,212,255,1) 100%);
   color: #FFFFFF; /* Blanco para el texto */
   padding: 12px 25px;
   font-size: 1.2rem;
@@ -96,4 +96,22 @@
   height: 100%;
   z-index: -1;
   background: linear-gradient(180deg, #0077b6 0%, #00b4d8 100%);
+}
+
+.styled-logout-button {
+  background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 128, 0, 1) 100%); /* Degradado de rojo a naranja */
+  color: #ffffff; /* Color de texto blanco */
+  padding: 12px 25px; /* Espaciado interno */
+  font-size: 1.2rem; /* Tamaño de fuente */
+  border: none; /* Sin borde */
+  border-radius: 8px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+  margin-top: 20px; /* Margen superior para separación */
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease; /* Efecto de transición */
+  font-family: 'Verdana', sans-serif; /* Fuente moderna */
+}
+
+.styled-logout-button:hover {
+  transform: scale(1.05); /* Efecto de ampliación al pasar el mouse */
+  background-color: #e63946; /* Color más oscuro al pasar el mouse */
 }
