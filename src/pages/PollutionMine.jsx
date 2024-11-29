@@ -1,9 +1,9 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { auth } from '../firebase';
 import useAuthStore from '../stores/use-auth-store.js';
-import { Canvas} from '@react-three/fiber';
+import { Canvas, useFrame} from '@react-three/fiber';
 
-import { useGLTF, OrbitControls, Environment, useAnimations, Html, useTexture } from '@react-three/drei';
+import { useGLTF, OrbitControls, Environment, useAnimations, Html, useTexture, KeyboardControls, useKeyboardControls  } from '@react-three/drei';
 
 import * as THREE from "three";
 
@@ -49,24 +49,53 @@ const MineModel = () => {
     };
   }, [actions])
 
+
+     //-------------------EVENTOS DEL TECLADO------------
+     const [subscribe, get] = useKeyboardControls();
+     const meshRef = useRef();
+   
+       // Manejamos el movimiento de la caja
+       useFrame(() => {
+         const state = get(); // Estado actual de los controles
+         const speed = 3;
+     
+         if (meshRef.current) {
+           if (state.forward) meshRef.current.position.z -= speed;
+           if (state.back) meshRef.current.position.z += speed;
+           if (state.left) meshRef.current.position.x -= speed;
+           if (state.right) meshRef.current.position.x += speed;
+         }
+       });
+         // Opcional: Suscribirse para ver cambios en el estado
+     useEffect(() => {
+       const unsubscribe = subscribe((state) => {
+         console.log('Controles activos:', state);
+       });
+   
+       return () => unsubscribe();
+     }, [subscribe]);
+   
   return (
-    <primitive
-      object={scene}
-      scale={[5, 5, 5]} // Ajustar el tamaño del modelo
-      position={[-20, -40, -100]} // Ajustar la posición del modelo
-      rotation={[0, Math.PI / 35, 0]} // Rotar el modelo para una mejor vista
-    />
+    <mesh ref={meshRef}>
+      <primitive
+        object={scene}
+        scale={[5, 5, 5]} // Ajustar el tamaño del modelo
+        position={[-20, -40, -100]} // Ajustar la posición del modelo
+        rotation={[0, Math.PI / 35, 0]} // Rotar el modelo para una mejor vista
+      />
+    </mesh>
   );
 };
 
 
+
 // Componente principal de la escena
 const PollutionMine = () => {
-
+  
   const { user, loginGoogleWithPopUp, logout, observeAuthState } = useAuthStore();
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-
+  
   useEffect(() => {
     const checkAuthState = async () => {
       await observeAuthState();
@@ -76,35 +105,46 @@ const PollutionMine = () => {
   }, [observeAuthState]);
 
   const handleLogout = useCallback(() => logout(), [logout]);
-
+  
   if (loading) return <p className="loading-text">Loading...</p>;
-
+  
   const toggleMenu = () => setIsOpen(!isOpen);
-
+  
+  
+  
   return (
     <>
       <div className="container-home">
-        <Canvas style={{ height: '100%', width: '100%' }}>
-          <OrbitControls
-            enableZoom={true} // Permitir zoom
-            maxDistance={200} // Distancia máxima para alejar el zoom
-            minDistance={5} // Distancia mínima para acercar el zoom
-            enableRotate={true} // Permitir rotación
-            rotateSpeed={1} // Ajustar la velocidad de rotación
-            enablePan={true} // Permitir desplazamiento
-          />
-          <Envir/>
-          <Lights/>
-          <MineModel castShadow/>
-          <Html center distanceFactor={90} transform castShadow position={[-20, 5, -80]}>
-            <h1 style={{color:"#18addefc", fontFamily: "sans-serif"}}>Minería Ilegal y la Contaminación del Agua</h1>      
-          </Html>
-          <Html center distanceFactor={80} transform castShadow position={[-20, -28, -80]}>
-            <p style={{fontSize: '2em', textAlign: 'justify', maxWidth: '900px' , fontFamily: "sans-serif", backgroundColor:'rgba(0, 0, 0, 0.5)',padding:'10px', borderRadius: '10px', color: '#fff'}}>
-            Aunque puede parecer una fuente rápida de ingresos, genera graves consecuencias ambientales, especialmente en la contaminación del agua. Esta actividad utiliza químicos tóxicos como mercurio y cianuro, provoca sedimentación por la erosión del suelo, destruye ecosistemas al alterar el ciclo hídrico y afecta directamente la salud y los recursos de las comunidades locales que dependen de estas fuentes de agua.
-            </p>
-          </Html>
-        </Canvas>
+        <KeyboardControls map = {[
+    {name: "forward", keys: ["ArrowUp","KeyW"]},
+    {name: "back", keys: ["ArrowDown","KeyS"]},
+    {name: "left", keys: ["ArrowLeft","KeyA"]},
+    {name: "right", keys: ["ArrowRight","KeyD"]},
+    {name: "jump", keys: ["space"]},
+    {name: "escape", keys: ["Escape"]},
+  ]}>
+          <Canvas style={{ height: '100%', width: '100%' }}>
+            <OrbitControls
+              enableZoom={true} // Permitir zoom
+              maxDistance={200} // Distancia máxima para alejar el zoom
+              minDistance={5} // Distancia mínima para acercar el zoom
+              enableRotate={true} // Permitir rotación
+              rotateSpeed={1} // Ajustar la velocidad de rotación
+              enablePan={true} // Permitir desplazamiento
+            />
+            <Envir/>
+            <Lights/>
+            <MineModel castShadow/>
+            <Html center distanceFactor={90} transform castShadow position={[-20, 5, -80]}>
+              <h1 style={{color:"#18addefc", fontFamily: "sans-serif"}}>Minería Ilegal y la Contaminación del Agua</h1>      
+            </Html>
+            <Html center distanceFactor={80} transform castShadow position={[-20, -28, -80]}>
+              <p style={{fontSize: '2em', textAlign: 'justify', maxWidth: '900px' , fontFamily: "sans-serif", backgroundColor:'rgba(0, 0, 0, 0.5)',padding:'10px', borderRadius: '10px', color: '#fff'}}>
+              Aunque puede parecer una fuente rápida de ingresos, genera graves consecuencias ambientales, especialmente en la contaminación del agua. Esta actividad utiliza químicos tóxicos como mercurio y cianuro, provoca sedimentación por la erosión del suelo, destruye ecosistemas al alterar el ciclo hídrico y afecta directamente la salud y los recursos de las comunidades locales que dependen de estas fuentes de agua.
+              </p>
+            </Html>
+          </Canvas>
+        </KeyboardControls>
       </div>
        {/*MENU HAMBURGUESA*/}
        <div className="nav-links">

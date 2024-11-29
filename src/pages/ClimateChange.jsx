@@ -2,7 +2,7 @@ import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { auth } from '../firebase';
 import useAuthStore from '../stores/use-auth-store.js';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, OrbitControls, useTexture, Html, Environment } from '@react-three/drei';
+import { Sphere, OrbitControls, useTexture, Html, Environment, KeyboardControls, useKeyboardControls  } from '@react-three/drei';
 import Lights from '../components/Lights';
 import './../styles/Home.css'; 
 
@@ -19,6 +19,35 @@ const RotatingEarth = () => {
   const textureEspacio = useTexture('/textures/espacioEnvir.jpg'); // Textura de la Tierra
 
 
+
+
+  //-------------------EVENTOS DEL TECLADO------------
+  const [subscribe, get] = useKeyboardControls();
+  //const meshRef = useRef();
+
+    // Manejamos el movimiento de la caja
+    useFrame(() => {
+      const state = get(); // Estado actual de los controles
+      const speed = 0.1;
+  
+      if (meshRef.current) {
+        if (state.forward) meshRef.current.position.z -= speed;
+        if (state.back) meshRef.current.position.z += speed;
+        if (state.left) meshRef.current.position.x -= speed;
+        if (state.right) meshRef.current.position.x += speed;
+      }
+    });
+      // Opcional: Suscribirse para ver cambios en el estado
+  useEffect(() => {
+    const unsubscribe = subscribe((state) => {
+      console.log('Controles activos:', state);
+    });
+
+    return () => unsubscribe();
+  }, [subscribe]);
+
+
+
   // Animar la rotación de la esfera
   useFrame(() => {
     if (meshRef.current) {
@@ -28,15 +57,18 @@ const RotatingEarth = () => {
 
   return (
     <>
-    {/* Planeta Tierra */}
-    <Sphere ref={meshRef} args={[1, 64, 64]} position={[0, 0, 0]}>
-      <meshStandardMaterial attach="material" map={texture} />
-    </Sphere>
+    <mesh ref={meshRef}>
+      <Sphere args={[1, 64, 64]} position={[0, 0, 0]}>
+        <meshStandardMaterial attach="material" map={texture} />
+      </Sphere>
 
-    {/* Esfera 3D (atmósfera) */}
-    <Sphere args={[1.05, 64, 64]} position={[0, 0, 0]}>
-      <meshStandardMaterial attach="material" map={atmosphereTexture} transparent opacity={0.5} />
-    </Sphere>
+      {/* Esfera 3D (atmósfera) */}
+      <Sphere args={[1.05, 64, 64]} position={[0, 0, 0]}>
+        <meshStandardMaterial attach="material" map={atmosphereTexture} transparent opacity={0.5} />
+      </Sphere>
+    </mesh>
+
+    {/* Planeta Tierra */}
 
     <Html center distanceFactor={5} transform castShadow position={[0,2,0]}>
       <h1 style={{ fontSize: '3em', textAlign: 'center', fontFamily: 'sans-serif', color:"#18addefc"}}>Cambio Climático</h1>
@@ -59,11 +91,12 @@ const RotatingEarth = () => {
   );
 };
 
+
 const ClimateChange = () => {
   const { user, loginGoogleWithPopUp, logout, observeAuthState } = useAuthStore();
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-
+  
   useEffect(() => {
     const checkAuthState = async () => {
       await observeAuthState();
@@ -77,8 +110,8 @@ const ClimateChange = () => {
   if (loading) return <p className="loading-text">Loading...</p>;
 
   const toggleMenu = () => setIsOpen(!isOpen);
-
   
+
   return (
     <div style={{ 
       height: '100vh', 
@@ -89,19 +122,29 @@ const ClimateChange = () => {
       justifyContent: 'center',
       color: '#FFFFFF' // Color de texto blanco para contraste
     }}>
-      <Canvas shadows style={{ height: '100%', width: '100%' }}>
-        <Lights/>
-        {/* Planeta Tierra */}
-        <RotatingEarth />
-        <OrbitControls 
-          enableZoom={true} // Permitir acercar y alejar
-          minDistance={1.5} // Distancia mínima de la cámara
-          maxDistance={5} // Distancia máxima de la cámara
-          enablePan={true} // Permitir mover la vista
-          maxPolarAngle={Math.PI / 2} // Limitar el ángulo de rotación vertical
-          minPolarAngle={0} // Limitar el ángulo de rotación vertical
-        />
-      </Canvas>
+
+      <KeyboardControls map = {[
+    {name: "forward", keys: ["ArrowUp","KeyW"]},
+    {name: "back", keys: ["ArrowDown","KeyS"]},
+    {name: "left", keys: ["ArrowLeft","KeyA"]},
+    {name: "right", keys: ["ArrowRight","KeyD"]},
+    {name: "jump", keys: ["space"]},
+    {name: "escape", keys: ["Escape"]},
+  ]}>
+        <Canvas shadows style={{ height: '100%', width: '100%' }}>
+          <Lights/>
+          {/* Planeta Tierra */}
+          <RotatingEarth />
+          <OrbitControls 
+            enableZoom={true} // Permitir acercar y alejar
+            minDistance={1.5} // Distancia mínima de la cámara
+            maxDistance={5} // Distancia máxima de la cámara
+            enablePan={true} // Permitir mover la vista
+            maxPolarAngle={Math.PI / 2} // Limitar el ángulo de rotación vertical
+            minPolarAngle={0} // Limitar el ángulo de rotación vertical
+          />
+        </Canvas>
+      </KeyboardControls>
 
         {/*MENU HAMBURGUESA*/}
         <div className="nav-links">

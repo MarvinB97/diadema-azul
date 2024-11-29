@@ -3,7 +3,7 @@ import { auth } from '../firebase';
 import useAuthStore from '../stores/use-auth-store.js';
 import { Canvas, useFrame } from '@react-three/fiber';
 
-import { useGLTF, OrbitControls, Environment , Html, useTexture} from '@react-three/drei';
+import { useGLTF, OrbitControls, Environment , Html, useTexture, KeyboardControls, useKeyboardControls } from '@react-three/drei';
 
 import * as THREE from "three";
 
@@ -15,7 +15,38 @@ import '../styles/HamburgerMenu.css';
 
 const Model = () => {
   const { scene } = useGLTF('/models-3d/ciudad_desierto.glb'); 
-  return <primitive object={scene} scale={[1.0, 1.0, 1.0]} position={[-150, -400, -300]} />;
+
+  //-------------------EVENTOS DEL TECLADO------------
+  const [subscribe, get] = useKeyboardControls();
+  const meshRef = useRef();
+
+    // Manejamos el movimiento de la caja
+    useFrame(() => {
+      const state = get(); // Estado actual de los controles
+      const speed = 4;
+  
+      if (meshRef.current) {
+        if (state.forward) meshRef.current.position.z -= speed;
+        if (state.back) meshRef.current.position.z += speed;
+        if (state.left) meshRef.current.position.x -= speed;
+        if (state.right) meshRef.current.position.x += speed;
+      }
+    });
+      // Opcional: Suscribirse para ver cambios en el estado
+  useEffect(() => {
+    const unsubscribe = subscribe((state) => {
+      console.log('Controles activos:', state);
+    });
+
+    return () => unsubscribe();
+  }, [subscribe]);
+
+
+  return (
+  <mesh ref={meshRef}>
+    <primitive object={scene} scale={[1.0, 1.0, 1.0]} position={[-150, -400, -300]} />
+  </mesh>
+  );
 };
 
 
@@ -32,12 +63,14 @@ const Envir = ()=>{
   );
 }
 
-const InteractiveCityDesert = () => {
 
+
+const InteractiveCityDesert = () => {
+  
   const { user, loginGoogleWithPopUp, logout, observeAuthState } = useAuthStore();
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-
+  
   useEffect(() => {
     const checkAuthState = async () => {
       await observeAuthState();
@@ -45,18 +78,26 @@ const InteractiveCityDesert = () => {
     };
     checkAuthState();
   }, [observeAuthState]);
-
+  
   const handleLogout = useCallback(() => logout(), [logout]);
-
+  
   if (loading) return <p className="loading-text">Loading...</p>;
-
+  
   const toggleMenu = () => setIsOpen(!isOpen);
-
+  
+  
 
 
   return (
     <div className="container-home">
-      {/* Canvas con el modelo 3D */}
+      <KeyboardControls map = {[
+    {name: "forward", keys: ["ArrowUp","keyW"]},
+    {name: "back", keys: ["ArrowDown","keyS"]},
+    {name: "left", keys: ["ArrowLeft","keyA"]},
+    {name: "right", keys: ["ArrowRight","keyD"]},
+    {name: "jump", keys: ["space"]},
+    {name: "escape", keys: ["Escape"]},
+  ]}>
         <Canvas shadows style={{ height: '100%', width: '100%' }} camera={{far: 5000}}>
           <Lights/>
           <Envir />
@@ -82,6 +123,8 @@ const InteractiveCityDesert = () => {
             Las estrategias eficaces de gestión del agua son fundamentales para satisfacer las crecientes necesidades de las comunidades de todo el mundo.</p>
           </Html>
         </Canvas>
+      </KeyboardControls>
+      {/* Canvas con el modelo 3D */}
         {/*MENU HAMBURGUESA*/}
         <div className="nav-links">
             <div className="menu-container">

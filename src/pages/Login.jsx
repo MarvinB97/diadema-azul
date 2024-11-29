@@ -2,7 +2,7 @@
 import logo from './../assets/logo.png';
 import PlayaModel from './../components/PlayaModel';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
+import { OrbitControls, Environment , KeyboardControls, useKeyboardControls } from '@react-three/drei';
 
 import Home from './Home.jsx';
 
@@ -11,44 +11,51 @@ import Home from './Home.jsx';
 
 import '../styles/Login.css';
 
+
 function Login() {
+
     return (
       <div className="container-home">
-      {/* Canvas para el modelo 3D */}
-      <Canvas
-        shadows
-        camera={{ position: [0, 5, 10], fov: 50, near: 0.1, far: 1000 }} 
-        dpr={[1, 2]}
-        antialias
-      >
-        {/* Luces */}
-        <ambientLight intensity={0.7} /> 
-        <directionalLight
-          castShadow
-          position={[5, 10, 5]}
-          intensity={2} 
-          shadow-mapSize-width={2048}
-          shadow-mapSize-height={2048}
-          shadow-camera-near={0.5}
-          shadow-camera-far={500}
-        />
-        
-        {/* Modelo 3D de la playa */}
-        <PlayaModel position={[0, -1.5, 0]} scale={[2,2,2]} /> 
+        <KeyboardControls map = {[
+    {name: "forward", keys: ["ArrowUp","KeyW"]},
+    {name: "back", keys: ["ArrowDown","KeyS"]},
+    {name: "left", keys: ["ArrowLeft","KeyA"]},
+    {name: "right", keys: ["ArrowRight","KeyD"]},
+    {name: "jump", keys: ["space"]},
+    {name: "escape", keys: ["Escape"]},
+  ]}>
+          {/* Canvas para el modelo 3D */}
+          <Canvas
+            shadows
+            camera={{ position: [0, 5, 10], fov: 50, near: 0.1, far: 1000 }} 
+            dpr={[1, 2]}
+            antialias
+          >
+            {/* Luces */}
+            <ambientLight intensity={0.7} /> 
+            <directionalLight
+              castShadow
+              position={[5, 10, 5]}
+              intensity={2} 
+              shadow-mapSize-width={2048}
+              shadow-mapSize-height={2048}
+              shadow-camera-near={0.5}
+              shadow-camera-far={500}
+            />
+            
+            {/* Modelo 3D de la playa */}
+            <PlayaModel position={[0, -1.5, 0]} scale={[2,2,2]} /> 
 
-        {/* Control de cámara */}
-        <OrbitControls />
-        
-        {/* Ambiente HDR */}
-        <Environment preset="warehouse" background resolution={4096}/>
+            {/* Control de cámara */}
+            <OrbitControls />
+            
+            {/* Ambiente HDR */}
+            <Environment preset="warehouse" background resolution={4096}/>
 
-      </Canvas>
+          </Canvas>
+        </KeyboardControls>
 
       {/* Contenido de la página */}
-
-      
-
-
 
       <div className="nav-links">
           

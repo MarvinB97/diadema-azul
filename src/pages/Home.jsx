@@ -3,7 +3,7 @@ import { auth } from '../firebase';
 import useAuthStore from '../stores/use-auth-store.js';
 import logo from './../assets/logo.png';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Plane, OrbitControls, Environment, useTexture, Html } from '@react-three/drei';
+import { Plane, OrbitControls, Environment, useTexture, Html , KeyboardControls, useKeyboardControls } from '@react-three/drei';
 import PlayaModel from './../components/PlayaModel';
 import './../styles/Home.css';
 import '../styles/HamburgerMenu.css';
@@ -34,6 +34,89 @@ function FlowingWater() {
   );
 }
 
+function Model(){
+    //-------------------EVENTOS DEL TECLADO------------
+    const [subscribe, get] = useKeyboardControls();
+    const meshRef = useRef();
+  
+      // Manejamos el movimiento de la caja
+      useFrame(() => {
+        const state = get(); // Estado actual de los controles
+        const speed = 0.1;
+    
+        if (meshRef.current) {
+          if (state.forward) meshRef.current.position.z -= speed;
+          if (state.back) meshRef.current.position.z += speed;
+          if (state.left) meshRef.current.position.x -= speed;
+          if (state.right) meshRef.current.position.x += speed;
+        }
+      });
+        // Opcional: Suscribirse para ver cambios en el estado
+    useEffect(() => {
+      const unsubscribe = subscribe((state) => {
+        console.log('Controles activos:', state);
+      });
+  
+      return () => unsubscribe();
+    }, [subscribe]);
+  
+  
+  
+    // Animar la rotación de la esfera
+    useFrame(() => {
+      if (meshRef.current) {
+        meshRef.current.rotation.y += 0.005; // Rotación más lenta para suavidad
+      }
+    });
+
+    return(
+      <mesh ref={meshRef}>
+        <PlayaModel position={[0, -1.5, 0]} scale={[2, 2, 2]} castShadow />
+        <Floor />
+      </mesh>
+    );
+}
+
+function ModelLogin(){
+     //-------------------EVENTOS DEL TECLADO------------
+     const [subscribe, get] = useKeyboardControls();
+     const meshRef = useRef();
+   
+       // Manejamos el movimiento de la caja
+       useFrame(() => {
+         const state = get(); // Estado actual de los controles
+         const speed = 0.1;
+     
+         if (meshRef.current) {
+           if (state.forward) meshRef.current.position.z -= speed;
+           if (state.back) meshRef.current.position.z += speed;
+           if (state.left) meshRef.current.position.x -= speed;
+           if (state.right) meshRef.current.position.x += speed;
+         }
+       });
+         // Opcional: Suscribirse para ver cambios en el estado
+     useEffect(() => {
+       const unsubscribe = subscribe((state) => {
+         console.log('Controles activos:', state);
+       });
+   
+       return () => unsubscribe();
+     }, [subscribe]);
+   
+  return(
+    <mesh ref={meshRef}>
+      <FlowingWater />
+      <Html center distanceFactor={4} transform position={[0,0.5,0]} castShadow>
+        <h1 className="welcome-text">¡Bienvenido a Diadema Azul!</h1>
+      </Html>
+      <Html center distanceFactor={4} transform position={[0,0,0]} castShadow>
+        <p style={{color:"white"}}>"Exploramos la importancia del agua para la vida, su conservación y el impacto ambiental de su uso."</p>
+      </Html>
+    </mesh>
+  )
+}
+
+
 function Home() {
   const { user, loginGoogleWithPopUp, logout, observeAuthState } = useAuthStore();
   const [loading, setLoading] = useState(true);
@@ -48,39 +131,48 @@ function Home() {
     };
     checkAuthState();
   }, [observeAuthState]);
-
+  
   const handleLogin = useCallback(() => loginGoogleWithPopUp(), [loginGoogleWithPopUp]);
   const handleLogout = useCallback(() => logout(), [logout]);
-
+  
   const toggleMenu = () => setIsOpen(!isOpen);
-
+  
   const handleCommentClick = () => {
     setShowCommentBox(!showCommentBox);
   };
-
+  
   const handleCommentChange = (event) => {
     setComment(event.target.value);
   };
-
+  
   const handleCommentSubmit = () => {
     alert('Comentario enviado: ' + comment);
     setComment('');
     setShowCommentBox(false);
   };
   
-
+  
   if (loading) return <p className="loading-text">Loading...</p>;
+  
+
 
   return (
     <div>
       {user ? (
         <>
           <div className="container-home">
-            <Canvas shadows camera={{ position: [0, 5, 10], fov: 50, near: 0.1, far: 1000 }} dpr={[1, 2]} antialias>
+          <KeyboardControls map = {[
+    {name: "forward", keys: ["ArrowUp","KeyW"]},
+    {name: "back", keys: ["ArrowDown","KeyS"]},
+    {name: "left", keys: ["ArrowLeft","KeyA"]},
+    {name: "right", keys: ["ArrowRight","KeyD"]},
+    {name: "jump", keys: ["space"]},
+    {name: "escape", keys: ["Escape"]},
+  ]}>
+            <Canvas shadows camera={{ position: [0, 5, 10], fov: 50, near: 0.1, far: 1000 }} dpr={[1, 2]}>
               <OrbitControls />
               <Lights />
-              <PlayaModel position={[0, -1.5, 0]} scale={[2, 2, 2]} castShadow />
-              <Floor />
+              <Model/>
               <Html center distanceFactor={20} transform castShadow position={[0, 1, 0]}>
                 <h1 className="welcome-text" style={{ fontFamily: "sans-serif" }}>¡Bienvenido a Diadema Azul!</h1>
               </Html>
@@ -89,6 +181,7 @@ function Home() {
               </Html>
               <Environment preset="park" background resolution={4096} />
             </Canvas>
+          </KeyboardControls>
           </div>
 
           <div className="header-content">
@@ -163,19 +256,22 @@ function Home() {
 </>
       ) : (
         <div className="container-home">
-          <Canvas shadows camera={{ position: [0, 1, 5], fov: 50 }}>
-            <ambientLight intensity={0.4} />
-            <directionalLight position={[5, 10, 5]} intensity={1} castShadow />
-            <FlowingWater />
-            <OrbitControls />
-            <Html center distanceFactor={4} transform position={[0,0.5,0]} castShadow>
-                <h1 className="welcome-text">¡Bienvenido a Diadema Azul!</h1>
-            </Html>
-            <Html center distanceFactor={4} transform position={[0,0,0]} castShadow>
-              <p style={{color:"white"}}>"Exploramos la importancia del agua para la vida, su conservación y el impacto ambiental de su uso."</p>
-            </Html>
-            <Environment preset="night" background resolution={4096} />
-          </Canvas>
+          <KeyboardControls map = {[
+    {name: "forward", keys: ["ArrowUp","KeyW"]},
+    {name: "back", keys: ["ArrowDown","KeyS"]},
+    {name: "left", keys: ["ArrowLeft","KeyA"]},
+    {name: "right", keys: ["ArrowRight","KeyD"]},
+    {name: "jump", keys: ["space"]},
+    {name: "escape", keys: ["Escape"]},
+  ]}>
+            <Canvas shadows camera={{ position: [0, 1, 5], fov: 50 }}>
+              <ambientLight intensity={0.4} />
+              <directionalLight position={[5, 10, 5]} intensity={1} castShadow />
+              <ModelLogin/>
+              <OrbitControls />
+              <Environment preset="night" background resolution={4096} />
+            </Canvas>
+          </KeyboardControls>
           <div className="header-content">
             <img src={logo} alt="Diadema Azul Logo" className="logo" />
             <button className="styled-button" onClick={handleLogin}>Login</button>
