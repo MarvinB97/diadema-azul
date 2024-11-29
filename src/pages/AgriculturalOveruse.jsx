@@ -73,7 +73,7 @@ const AgriculturalOveruse = () => {
             <h1 style={{color:"#18addefc", fontSize: '3em', textAlign: 'center', fontFamily: 'sans-serif'}}>Causas y Consecuencias de la Contaminación Marina</h1>      
           </Html>
           <Html center distanceFactor={5} transform castShadow position={[0,-2,0]}>
-            <p style={{fontSize: '2em', textAlign: 'justify', maxWidth: '900px' , fontFamily: "sans-serif"}}>La contaminación marina, causada por plaguicidas, fertilizantes, plásticos, productos químicos y aguas residuales, genera problemas como eutrofización, intoxicación del agua y daño a la fauna marina. Sus consecuencias incluyen pérdida de biodiversidad, alteración de ecosistemas, riesgos para la salud humana por el consumo de mariscos contaminados y perjuicios económicos en sectores como la pesca y el turismo.</p>
+            <p style={{fontSize: '2em', textAlign: 'justify', maxWidth: '900px' , fontFamily: "sans-serif", backgroundColor:'rgba(0, 0, 0, 0.5)',padding:'10px', borderRadius: '10px', color: '#fff' }}>La contaminación marina, causada por plaguicidas, fertilizantes, plásticos, productos químicos y aguas residuales, genera problemas como eutrofización, intoxicación del agua y daño a la fauna marina. Sus consecuencias incluyen pérdida de biodiversidad, alteración de ecosistemas, riesgos para la salud humana por el consumo de mariscos contaminados y perjuicios económicos en sectores como la pesca y el turismo.</p>
           </Html>
         </Canvas>
         </div>

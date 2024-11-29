@@ -76,8 +76,8 @@ const InteractiveCityDesert = () => {
           <Html center distanceFactor={80} transform castShadow position={[0,5,0]}>
             <h1 style={{color:"#18addefc", fontFamily: "sans-serif"}}>Crecimiento Demográfico</h1>      
           </Html>
-          <Html center distanceFactor={80} transform castShadow position={[0,-5,0]}>
-            <p style={{textAlign: "justify", width: "1000px", color: "white", fontFamily: "sans-serif"}}> El crecimiento demográfico ejerce una presión cada vez mayor sobre los recursos hídricos.
+          <Html center distanceFactor={80} transform castShadow position={[0,-25,0]}>
+            <p style={{fontSize: '2em', textAlign: 'justify', maxWidth: '900px' , fontFamily: "sans-serif", backgroundColor:'rgba(0, 0, 0, 0.5)',padding:'10px', borderRadius: '10px', color: '#fff'}}> El crecimiento demográfico ejerce una presión cada vez mayor sobre los recursos hídricos.
             A medida que se expanden la urbanización y las actividades industriales, la demanda de agua aumenta exponencialmente.
             Las estrategias eficaces de gestión del agua son fundamentales para satisfacer las crecientes necesidades de las comunidades de todo el mundo.</p>
           </Html>

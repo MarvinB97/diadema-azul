@@ -96,12 +96,12 @@ const PollutionMine = () => {
           <Envir/>
           <Lights/>
           <MineModel castShadow/>
-          <Html center distanceFactor={90} transform castShadow position={[-20, 0, -80]}>
+          <Html center distanceFactor={90} transform castShadow position={[-20, 5, -80]}>
             <h1 style={{color:"#18addefc", fontFamily: "sans-serif"}}>Minería Ilegal y la Contaminación del Agua</h1>      
           </Html>
-          <Html center distanceFactor={80} transform castShadow position={[-20, -10, -80]}>
-            <p style={{textAlign: "justify", width: "1000px", color: "white", fontFamily: "sans-serif"}}>
-            aunque puede parecer una fuente rápida de ingresos, genera graves consecuencias ambientales, especialmente en la contaminación del agua. Esta actividad utiliza químicos tóxicos como mercurio y cianuro, provoca sedimentación por la erosión del suelo, destruye ecosistemas al alterar el ciclo hídrico y afecta directamente la salud y los recursos de las comunidades locales que dependen de estas fuentes de agua.
+          <Html center distanceFactor={80} transform castShadow position={[-20, -28, -80]}>
+            <p style={{fontSize: '2em', textAlign: 'justify', maxWidth: '900px' , fontFamily: "sans-serif", backgroundColor:'rgba(0, 0, 0, 0.5)',padding:'10px', borderRadius: '10px', color: '#fff'}}>
+            Aunque puede parecer una fuente rápida de ingresos, genera graves consecuencias ambientales, especialmente en la contaminación del agua. Esta actividad utiliza químicos tóxicos como mercurio y cianuro, provoca sedimentación por la erosión del suelo, destruye ecosistemas al alterar el ciclo hídrico y afecta directamente la salud y los recursos de las comunidades locales que dependen de estas fuentes de agua.
             </p>
           </Html>
         </Canvas>

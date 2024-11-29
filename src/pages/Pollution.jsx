@@ -75,11 +75,11 @@ const Pollution = () => {
           panSpeed={0.5}
           />
           
-        <Html center distanceFactor={10} transform castShadow position={[0,1,0]} >
+        <Html center distanceFactor={10} transform castShadow position={[0,3,0]} >
           <h1 style={{color:"#18addefc", fontFamily: "sans-serif"}}>Contaminación de las Fuentes de Agua</h1>      
         </Html>
         <Html center distanceFactor={10} transform castShadow position={[0,-1,0]} >
-          <p style={{color:"white", width: "500px", textAlign: "justify", fontFamily: "sans-serif"}}>La contaminación procedente de la industria, la agricultura y los hogares contamina las fuentes de agua. Los vertidos químicos, los vertidos de residuos y las escorrentías de los campos agrícolas degradan la calidad del agua dulce, convirtiéndola en insegura para el consumo humano y los ecosistemas. Hacer frente a la contaminación es clave para salvaguardar los recursos hídricos.</p>
+          <p style={{fontSize: '2em', textAlign: 'justify', maxWidth: '900px' , fontFamily: "sans-serif", backgroundColor:'rgba(0, 0, 0, 0.5)',padding:'10px', borderRadius: '10px', color: '#fff'}}>La contaminación procedente de la industria, la agricultura y los hogares contamina las fuentes de agua. Los vertidos químicos, los vertidos de residuos y las escorrentías de los campos agrícolas degradan la calidad del agua dulce, convirtiéndola en insegura para el consumo humano y los ecosistemas. Hacer frente a la contaminación es clave para salvaguardar los recursos hídricos.</p>
         </Html>
       </Canvas>
         {/*MENU HAMBURGUESA*/}
