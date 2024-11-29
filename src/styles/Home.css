@@ -176,18 +176,17 @@ p {
 }
 
 
-/* From Uiverse.io by Creatlydev */
 .btn-github {
   cursor: pointer;
   display: flex;
   gap: 0.5rem;
-  border: none;
+ 
 
   transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
   border-radius: 100px;
   font-weight: 800;
   place-content: center;
-
+  
   padding: 0.75rem 1rem;
   font-size: 0.825rem;
   line-height: 1rem;
@@ -203,20 +202,114 @@ p {
   bottom: 20px; /* Ajusta la distancia desde la parte inferior */
   left: 50%;
   transform: translateX(-50%); /* Centra el botón horizontalmente */
-}
-
-/* Efecto hover */
-.btn-github:hover {
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
-    inset 0 0 0 1px rgba(252, 232, 3, 0.08);
-  color: #fce803;
-  transform: translate(0, -0.25rem);
-  background-color: rgba(0, 0, 0, 0.5);
+  
 }
 
 
 
+
+
+/* Estilo del botón para mostrar el cuadro de comentario */
+.bookmarkBtn {
+  width: 150px;
+  height: 50px;
+  border-radius: 40px;
+  border: none;
+  background-color: #1899D6;
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);  /* Sombra */
+  position: fixed;  /* Asegura que esté en la parte inferior */
+  bottom: 20px;  /* Ajusta la distancia desde la parte inferior */
+  right: -3.5%;  /* Centra el botón */
+  transform: translateX(-50%); /* Centra el botón */
+  z-index: 1000;  /* Asegura que esté por encima de otros elementos */
+}
+
+.bookmarkBtn .IconContainer {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition-duration: 0.3s;
+}
+
+.bookmarkBtn .text {
+  margin-left: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.bookmarkBtn:hover {
+  filter: brightness(1.1);
+}
+
+.bookmarkBtn:active {
+  transform: scale(0.95);
+}
+
+/* Estilo de la caja de comentarios */
+.comment-box {
+  position: fixed;
+  bottom: 90px;  /* Ajusta según sea necesario */
+  right: 30px;
+  background-color: #fff;
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 14px 18px;
+  width: 250px;
+  z-index: 2000;  /* Asegura que esté por encima de otros elementos */
+  display: none; /* Inicialmente oculto */
+}
+
+/* Clase para mostrar la caja de comentarios cuando 'showCommentBox' es true */
+.comment-box.show {
+  display: block;
+  opacity: 1; /* Visibilidad cuando se agrega la clase 'show' */
+  transition: opacity 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Estilo del área de texto */
+.comment-textarea {
+  width: 100%;
+  height: 60px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 4px;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+  resize: none;
+}
+
+/* Estilo del botón de enviar */
+.comment-submit-button {
+  margin-top: 8px;
+  width: 100%;
+  padding: 8px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comment-submit-button:hover {
+  background-color: #0056b3;
+}
 
 
 
