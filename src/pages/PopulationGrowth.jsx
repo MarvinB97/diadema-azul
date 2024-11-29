@@ -96,7 +96,7 @@ const InteractiveCityDesert = () => {
                   <li><Link to="/agricultural-overuse" className="button-option">Contaminacion marina</Link></li>
                   <li><Link to="/climate-change" className="button-option">Cambio Climatico</Link></li>
                   <li><Link to="/pollution" className="button-option">Contaminación del agua </Link></li>
-                  <li><Link to="/population-growth" className="button-option">Crecimiento Demográfico</Link></li>
+                  
                   <li><Link to="/pollution-mine" className="button-option">Minería ilegal</Link></li>
                 </ul>
                 
@@ -105,7 +105,22 @@ const InteractiveCityDesert = () => {
               </div>
             </div>
           </div>
+          <div className="book-container">
+  <div className="book">
+    <p></p>
+    <div className="cover">
+      <p>Solución al problema</p>
     </div>
+    <div className="content">
+    <p style={{ fontSize: '0.8em', textAlign:'justify' }}>
+
+    Para gestionar el crecimiento demográfico y su impacto sobre los recursos hídricos, es necesario implementar políticas de planificación urbana sostenible, mejorar la eficiencia en el uso del agua y promover tecnologías que optimicen su distribución.
+      </p>
+    </div>
+  </div>
+</div>
+    </div>
+    
   );
 };
 

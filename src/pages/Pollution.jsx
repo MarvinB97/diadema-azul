@@ -95,7 +95,7 @@ const Pollution = () => {
                 <ul>
                   <li><Link to="/agricultural-overuse" className="button-option">Contaminacion marina</Link></li>
                   <li><Link to="/climate-change" className="button-option">Cambio Climatico</Link></li>
-                  <li><Link to="/pollution" className="button-option">Contaminación del agua </Link></li>
+                  
                   <li><Link to="/population-growth" className="button-option">Crecimiento Demográfico</Link></li>
                   <li><Link to="/pollution-mine" className="button-option">Minería ilegal</Link></li>
                 </ul>
@@ -105,6 +105,20 @@ const Pollution = () => {
               </div>
             </div>
           </div>
+
+          <div className="book-container">
+  <div className="book">
+    <p></p>
+    <div className="cover">
+      <p>Solución al problema</p>
+    </div>
+    <div className="content">
+    <p style={{ fontSize: '0.8em', textAlign:'justify' }}>
+
+    Para abordar la contaminación de las fuentes de agua, es crucial mejorar el tratamiento de aguas residuales, regular el uso de pesticidas y fertilizantes en la agricultura, y promover prácticas industriales más limpias.       </p>
+    </div>
+  </div>
+</div>
     </div>
   );
 };

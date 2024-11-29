@@ -121,7 +121,7 @@ const PollutionMine = () => {
                   <li><Link to="/climate-change" className="button-option">Cambio Climatico</Link></li>
                   <li><Link to="/pollution" className="button-option">Contaminación del agua </Link></li>
                   <li><Link to="/population-growth" className="button-option">Crecimiento Demográfico</Link></li>
-                  <li><Link to="/pollution-mine" className="button-option">Minería ilegal</Link></li>
+                  
                 </ul>
                 
             
@@ -129,6 +129,19 @@ const PollutionMine = () => {
               </div>
             </div>
        </div>
+       <div className="book-container">
+  <div className="book">
+    <p></p>
+    <div className="cover">
+      <p>Solución al problema</p>
+    </div>
+    <div className="content">
+    <p style={{ fontSize: '0.8em', textAlign:'justify' }}>
+    Para mitigar los efectos de la minería ilegal en las fuentes de agua, es crucial establecer políticas estrictas de control ambiental, promover tecnologías de extracción más limpias y sostenibles, y fortalecer la supervisión gubernamental en las zonas afectadas. 
+      </p>
+    </div>
+  </div>
+</div>
     </>
   );
 };

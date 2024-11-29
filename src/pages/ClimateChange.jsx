@@ -115,7 +115,7 @@ const ClimateChange = () => {
                 <h3><Link to="/" className="button-option">Menú</Link></h3>
                 <ul>
                   <li><Link to="/agricultural-overuse" className="button-option">Contaminacion marina</Link></li>
-                  <li><Link to="/climate-change" className="button-option">Cambio Climatico</Link></li>
+                  
                   <li><Link to="/pollution" className="button-option">Contaminación del agua </Link></li>
                   <li><Link to="/population-growth" className="button-option">Crecimiento Demográfico</Link></li>
                   <li><Link to="/pollution-mine" className="button-option">Minería ilegal</Link></li>
@@ -126,6 +126,23 @@ const ClimateChange = () => {
               </div>
             </div>
           </div>
+
+         
+<div className="book-container">
+  <div className="book">
+    <p></p>
+    <div className="cover">
+      <p>Solución al problema</p>
+    </div>
+    <div className="content">
+    <p style={{ fontSize: '0.8em', textAlign:'justify' }}>
+
+      Para mitigar los efectos del cambio climático, se deben tomar medidas como la transición hacia energías renovables, la mejora de la eficiencia energética, la reducción de las emisiones de gases de efecto invernadero y el fomento de prácticas agrícolas sostenibles
+      </p>
+    </div>
+  </div>
+</div>
+       
     </div>
   );
 };
