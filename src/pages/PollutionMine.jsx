@@ -125,7 +125,7 @@ const PollutionMine = () => {
                 </ul>
                 
             
-                <button className="styled-logout-button" onClick={handleLogout}>Cerrar sesión</button>
+                <Link to= "/" className="styled-button">Volver al menu</Link>
               </div>
             </div>
        </div>

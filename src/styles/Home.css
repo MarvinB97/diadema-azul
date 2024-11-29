@@ -73,7 +73,7 @@
 .styled-button {
   background: rgb(0, 0, 0);
   background: linear-gradient(90deg, rgb(51, 50, 85) 0%, rgba(0,127,222,1) 43%, rgba(0,212,255,1) 100%);
-  color: #FFFFFF; /* Blanco para el texto */
+  color: #FFFFFF !important; /* Blanco para el texto */
   padding: 12px 25px;
   font-size: 1.2rem;
   border: none;
