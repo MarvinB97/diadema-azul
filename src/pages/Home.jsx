@@ -202,6 +202,7 @@ function Home() {
                   <li><Link to="/pollution" className="button-option">Contaminación del agua </Link></li>
                   <li><Link to="/population-growth" className="button-option">Crecimiento Demográfico</Link></li>
                   <li><Link to="/pollution-mine" className="button-option">Minería ilegal</Link></li>
+                  <li><Link to="/quiz" className="button-option">Quiz</Link></li>
                 </ul>
 
                 <button className="styled-logout-button" onClick={handleLogout}>Cerrar sesión</button>

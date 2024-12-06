@@ -140,6 +140,7 @@ const Pollution = () => {
                   
                   <li><Link to="/population-growth" className="button-option">Crecimiento Demográfico</Link></li>
                   <li><Link to="/pollution-mine" className="button-option">Minería ilegal</Link></li>
+                  <li><Link to="/quiz" className="button-option">Quiz</Link></li>
                 </ul>
                 
             

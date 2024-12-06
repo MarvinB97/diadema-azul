@@ -6,7 +6,7 @@ import Pollution from './pages/Pollution';
 import ClimateChange from './pages/ClimateChange';
 import PopulationGrowth from './pages/PopulationGrowth';
 import PollutionMine from './pages/PollutionMine';
-
+import Quiz from './pages/quiz';
 
 function MainPage() {
   return (
@@ -19,6 +19,7 @@ function MainPage() {
         <Route path="/climate-change" element={<ClimateChange />} />
         <Route path="/population-growth" element={<PopulationGrowth />} />
         <Route path="/pollution-mine" element={<PollutionMine />} />
+        <Route path="/quiz" element={<Quiz/>}/>
       </Routes>
     </Router>
   );
