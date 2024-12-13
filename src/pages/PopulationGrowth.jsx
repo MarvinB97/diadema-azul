@@ -12,6 +12,7 @@ import './../styles/Home.css';
 
 import { Link } from 'react-router-dom';
 import '../styles/HamburgerMenu.css';
+import { Physics, RigidBody } from '@react-three/rapier';
 
 const Model = () => {
   const { scene } = useGLTF('/models-3d/ciudad_desierto.glb'); 
@@ -41,11 +42,21 @@ const Model = () => {
     return () => unsubscribe();
   }, [subscribe]);
 
+  //FISICAS
+
+  const rbRefer = useRef();
+
+  const rbHandle = () => {
+    rbRefer.current.applyImpulse({x: 0, y: 50, z: 0}, true);
+  };
+
 
   return (
-  <mesh ref={meshRef}>
-    <primitive object={scene} scale={[1.0, 1.0, 1.0]} position={[-150, -400, -300]} />
-  </mesh>
+    <RigidBody ref={rbRefer} type='dynamic' colliders='cuboid' mass={10} >
+      <mesh ref={meshRef} onClick={rbHandle}>
+        <primitive object={scene} scale={[1.0, 1.0, 1.0]} position={[-150, -400, -300]} />
+      </mesh>
+    </RigidBody>
   );
 };
 
@@ -101,7 +112,10 @@ const InteractiveCityDesert = () => {
         <Canvas shadows style={{ height: '100%', width: '100%' }} camera={{far: 5000}}>
           <Lights/>
           <Envir />
-          <Model />
+          <Physics gravity={[0,0.1,0]}>
+            <Model />
+          </Physics>
+          
           <OrbitControls 
             enableZoom={true} 
             enablePan={true} 

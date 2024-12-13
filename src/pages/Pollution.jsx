@@ -12,6 +12,7 @@ import './../styles/Home.css';
 
 import { Link } from 'react-router-dom';
 import '../styles/HamburgerMenu.css';
+import { Physics, RigidBody } from '@react-three/rapier';
 
 // Componente para el modelo 3D
 const Model = () => {
@@ -43,10 +44,22 @@ const Model = () => {
        return () => unsubscribe();
      }, [subscribe]);
    
+
+     //FISICAS
+
+    const rbRefer = useRef();
+
+    const rbHandle = () => {
+      rbRefer.current.applyImpulse({x: 0, y: 50, z: 0}, true);
+    };
+
+
   return (
-  <mesh ref={meshRef}>
-    <primitive object={scene} scale={[1, 1,1]} position={[0,-3,-6]} />
-  </mesh>
+    <RigidBody ref={rbRefer} type='dynamic' colliders='ball' mass={10} >
+      <mesh ref={meshRef} >
+        <primitive object={scene} scale={[1, 1,1]} position={[0,-3,-6]} onClick={rbHandle}/>
+      </mesh>
+    </RigidBody>
   );
  // Ajusta la escala y la posición
 };
@@ -104,7 +117,10 @@ const Pollution = () => {
           <Lights/>
           <Envir/>
 
-          <Model receiveShadow/>
+          <Physics gravity={[0,-0.1,0]}>
+            <Model receiveShadow/>
+          </Physics>
+
           <OrbitControls 
             enableZoom={true} 
             enablePan={true} 

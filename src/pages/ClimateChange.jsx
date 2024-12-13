@@ -4,13 +4,24 @@ import useAuthStore from '../stores/use-auth-store.js';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, OrbitControls, useTexture, Html, Environment, KeyboardControls, useKeyboardControls  } from '@react-three/drei';
 import Lights from '../components/Lights';
+
+
 import './../styles/Home.css'; 
 
 import * as THREE from "three";
 
 import { Link } from 'react-router-dom';
 import '../styles/HamburgerMenu.css';
+import { Physics, RigidBody } from '@react-three/rapier';
 
+const Floor = ()=> {
+  return (
+    <mesh  rotation-x={Math.PI / -2} receiveShadow>
+      <circleGeometry args={[0.5, 32]} />
+      <meshStandardMaterial color={"black"}/>
+    </mesh>
+  );
+};
 
 const RotatingEarth = () => {
   const meshRef = useRef();
@@ -55,18 +66,32 @@ const RotatingEarth = () => {
     }
   });
 
+    //FISICAS
+
+    const rbRefer = useRef();
+
+    const rbHandle = () => {
+      rbRefer.current.applyImpulse({x: 0, y: 7, z: 0}, true);
+    };
+
   return (
     <>
-    <mesh ref={meshRef}>
-      <Sphere args={[1, 64, 64]} position={[0, 0, 0]}>
-        <meshStandardMaterial attach="material" map={texture} />
-      </Sphere>
+    <RigidBody ref={rbRefer} colliders='ball' mass={10}>
+      <mesh ref={meshRef} onClick={rbHandle}>
+        <Sphere args={[1, 64, 64]} position={[0, 0, 0]}>
+          <meshStandardMaterial attach="material" map={texture} />
+        </Sphere>
 
-      {/* Esfera 3D (atmósfera) */}
-      <Sphere args={[1.05, 64, 64]} position={[0, 0, 0]}>
-        <meshStandardMaterial attach="material" map={atmosphereTexture} transparent opacity={0.5} />
-      </Sphere>
-    </mesh>
+        {/* Esfera 3D (atmósfera) */}
+        <Sphere args={[1.05, 64, 64]} position={[0, 0, 0]}>
+          <meshStandardMaterial attach="material" map={atmosphereTexture} transparent opacity={0.5} />
+        </Sphere>
+      </mesh>
+    </RigidBody>
+
+    <RigidBody type='fixed' position={[0, -1, 0]}>
+      <Floor/>
+    </RigidBody>
 
     {/* Planeta Tierra */}
 
@@ -134,7 +159,9 @@ const ClimateChange = () => {
         <Canvas shadows style={{ height: '100%', width: '100%' }}>
           <Lights/>
           {/* Planeta Tierra */}
-          <RotatingEarth />
+          <Physics gravity={[0,-8,0]}>
+            <RotatingEarth/>
+          </Physics>
           <OrbitControls 
             enableZoom={true} // Permitir acercar y alejar
             minDistance={1.5} // Distancia mínima de la cámara

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState, useEffect } from 'react';
+import React, { useRef, useCallback, useState, useEffect, Suspense } from 'react';
 import { auth } from '../firebase';
 import useAuthStore from '../stores/use-auth-store.js';
 import { Canvas, useFrame } from '@react-three/fiber';
@@ -10,7 +10,9 @@ import './../styles/Home.css';
 
 import Lights from '../components/Lights';
 import FloorBosque from '../components/FloorBosque';
-import ObjectsBosque from '../components/ObjectsBosque'; 
+import ObjectsBosque from '../components/ObjectsBosque';
+
+import { Physics, RigidBody } from '@react-three/rapier';
 
 const Envir = () => {
   const textureMar = useTexture('/textures/marEnvir.jpg');
@@ -42,7 +44,96 @@ const Model = () => {
         if (state.right) meshRef.current.position.x += speed;
       }
     });
-      // Opcional: Suscribirse para ver cambios en el estado
+      
+  useEffect(() => {
+    const unsubscribe = subscribe((state) => {
+      console.log('Controles activos:', state);
+    });
+
+    return () => unsubscribe();
+  }, [subscribe]);
+
+  //FISICAS
+
+  const rbRefer = useRef();
+
+  const rbHandle = () => {
+    rbRefer.current.applyImpulse({x: 0, y: 0.1, z: 0}, true);
+  };
+
+  return(
+    <>
+      <mesh onClick={rbHandle} ref={meshRef} position={[0,1,-10]}>
+       <ObjectsBosque castShadow />
+      </mesh>
+      <RigidBody  ref={rbRefer} colliders='cuboid' lockTranslations={false} mass={10}>
+        <mesh position={[0,0,-4]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+        <mesh position={[0,0,2]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+        <mesh position={[0,0,-2]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+        <mesh position={[3,0,0]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+        <mesh position={[3,0,0]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+        <mesh position={[1,0,4]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+        <mesh position={[-1,0,3]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+        <mesh position={[-5,0,1]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+        <mesh position={[5,0,-1]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+        <mesh position={[-3,0,-3]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+        <mesh position={[3,0,3]}>
+          <sphereGeometry args={[0.1,32,32]} />
+          <meshBasicMaterial color={'white'}/>
+        </mesh>
+      </RigidBody>
+    </>
+  )
+}
+
+const Ground = () => {
+  //-------------------EVENTOS DEL TECLADO------------
+  const [subscribe, get] = useKeyboardControls();
+  const meshRef = useRef();
+
+    // Manejamos el movimiento de la caja
+    useFrame(() => {
+      const state = get(); // Estado actual de los controles
+      const speed = 0.1;
+  
+      if (meshRef.current) {
+        if (state.forward) meshRef.current.position.z -= speed;
+        if (state.back) meshRef.current.position.z += speed;
+        if (state.left) meshRef.current.position.x -= speed;
+        if (state.right) meshRef.current.position.x += speed;
+      }
+    });
+      
   useEffect(() => {
     const unsubscribe = subscribe((state) => {
       console.log('Controles activos:', state);
@@ -52,12 +143,16 @@ const Model = () => {
   }, [subscribe]);
 
   return(
-    <mesh ref={meshRef}>
-      <ObjectsBosque castShadow />
-      <FloorBosque receiveShadow />
-    </mesh>
+    <RigidBody type='fixed' position={[0,-1,-10]} colliders='cuboid'>
+      <mesh ref={meshRef}>
+        <FloorBosque receiveShadow />
+      </mesh>
+    </RigidBody>
   )
 }
+
+
+
 
 
 const AgriculturalOveruse = () => {
@@ -104,26 +199,31 @@ const AgriculturalOveruse = () => {
             />
             <Lights />
             <Envir />
-            <Model/>
-            <Html center distanceFactor={5} transform castShadow position={[0, 2, 0]}>
-              <h1 style={{ color: "#18addefc", fontSize: '3em', textAlign: 'center', fontFamily: 'sans-serif' }}>
-                Causas y Consecuencias de la Contaminación Marina
-              </h1>
-            </Html>
-            <Html center distanceFactor={5} transform castShadow position={[0, -2, 0]}>
-              <p style={{
-                fontSize: '2em', 
-                textAlign: 'justify', 
-                maxWidth: '900px', 
-                fontFamily: "sans-serif", 
-                backgroundColor: 'rgba(0, 0, 0, 0.5)', 
-                padding: '10px', 
-                borderRadius: '10px', 
-                color: '#fff'
-              }}>
-                La contaminación marina, causada por plaguicidas, fertilizantes, plásticos, productos químicos y aguas residuales, genera problemas como eutrofización, intoxicación del agua y daño a la fauna marina. Sus consecuencias incluyen pérdida de biodiversidad, alteración de ecosistemas, riesgos para la salud humana por el consumo de mariscos contaminados y perjuicios económicos en sectores como la pesca y el turismo.
-              </p>
-            </Html>
+            <Suspense>
+              <Physics gravity={[0,-1,0]}>
+                <Ground/>
+                <Model/>
+              </Physics>
+            </Suspense>
+              <Html center distanceFactor={5} transform castShadow position={[0, 2, -5]}>
+                <h1 style={{ color: "#18addefc", fontSize: '3em', textAlign: 'center', fontFamily: 'sans-serif' }}>
+                  Causas y Consecuencias de la Contaminación Marina
+                </h1>
+              </Html>
+              <Html center distanceFactor={5} transform castShadow position={[0, -2, -5]}>
+                <p style={{
+                  fontSize: '2em', 
+                  textAlign: 'justify', 
+                  maxWidth: '900px', 
+                  fontFamily: "sans-serif", 
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+                  padding: '10px', 
+                  borderRadius: '10px', 
+                  color: '#fff'
+                }}>
+                  La contaminación marina, causada por plaguicidas, fertilizantes, plásticos, productos químicos y aguas residuales, genera problemas como eutrofización, intoxicación del agua y daño a la fauna marina. Sus consecuencias incluyen pérdida de biodiversidad, alteración de ecosistemas, riesgos para la salud humana por el consumo de mariscos contaminados y perjuicios económicos en sectores como la pesca y el turismo.
+                </p>
+              </Html>
           </Canvas>
           </KeyboardControls>
       </div>
